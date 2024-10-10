@@ -2,6 +2,8 @@ import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
+import JobCard from "../../components/JobCard";
+import TrendingJobCard from "../../components/TrendingJobCard";
 
 const index = () => {
     return (
@@ -44,7 +46,7 @@ const index = () => {
 
             {/* Body */}
             <ScrollView
-                className="fle-1 bg-gray-100 px-3 space-y-3"
+                className="fle-1 bg-gray-100 px-3"
                 showsVerticalScrollIndicator={false}
             >
                 {/* Count Section */}
@@ -83,123 +85,11 @@ const index = () => {
                 </View>
 
                 {/* Job Section */}
-                <View className="flex flex-col">
-                    <View className="flex flex-row items-center justify-between pb-3">
-                        <Text className="text-black font-medium">
-                            Recent Job Circular
-                        </Text>
-                        <TouchableOpacity activeOpacity={0.6}>
-                            <Text className="text-blue-800 font-medium">
-                                View All
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    {/* Job Card */}
-                    <TouchableOpacity
-                        className="border border-slate-300 h-60 w-52 rounded-lg bg-white p-3 space-y-3"
-                        activeOpacity={0.5}
-                    >
-                        <View className="flex flex-row items-center justify-between space-x-2">
-                            <Image
-                                className="h-10 w-10 bg-green-100 rounded-full"
-                                source={require("../../assets/images/react-logo.png")}
-                            />
-                            <Text className="bg-green-400 rounded-full text-center py-0.5 px-3">
-                                Beginner
-                            </Text>
-                        </View>
-                        <Text
-                            className="text-lg font-semibold"
-                            numberOfLines={2}
-                            style={{ lineHeight: 20 }}
-                        >
-                            Full Stack Developer full tackle React Native
-                        </Text>
-                        <View>
-                            <Text className="text-gray-600 text-xs font-medium">
-                                Company Name
-                            </Text>
-                            <View className="flex flex-row items-center w-full space-x-1">
-                                <Text
-                                    className="text-gray-600 text-xs w-3/5 font-medium"
-                                    numberOfLines={1}
-                                >
-                                    Location, Countrydfsdf
-                                </Text>
-                                <Text className="text-gray-600 text-xs text-left font-medium">
-                                    • {2} days ago
-                                </Text>
-                            </View>
-                        </View>
-                        <View className="flex flex-row items-center space-x-2">
-                            <Text className="text-green-600 font-medium border border-green-600 rounded-full px-[5px] text-center">
-                                ৳
-                            </Text>
-                            <Text className="text-green-600 text-xs font-medium">
-                                Negotiable
-                            </Text>
-                        </View>
-                        <Text className="text-white text-base font-semibold rounded-full px-[5px] text-center py-1 bg-blue-800 ">
-                            Apply
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                <JobCard />
 
                 {/* Trending Job Section */}
-                <View className="flex flex-col">
-                    <View className="flex flex-row items-center pt-2 pb-3">
-                        <Text className="text-black font-medium">
-                            Trending Jobs
-                        </Text>
-                    </View>
+                <TrendingJobCard />
 
-                    {/* Trending Job Card */}
-                    <TouchableOpacity
-                        className="flex flex-row  border border-slate-300 w-11/12 rounded-lg bg-white p-3 space-x-3"
-                        activeOpacity={0.5}
-                    >
-                        <View className="flex items-center justify-center w-1/5">
-                            <Image
-                                className="h-14 w-14 bg-green-100 rounded-full"
-                                source={require("../../assets/images/react-logo.png")}
-                            />
-                        </View>
-                        <View className="flex flex-col justify-center w-4/5 space-y-2">
-                            <Text
-                                className="text-lg font-semibold"
-                                numberOfLines={2}
-                                style={{ lineHeight: 20 }}
-                            >
-                                Full Stack Developer
-                            </Text>
-                            <View>
-                                <Text className="text-gray-600 text-xs font-medium">
-                                    Company Name
-                                </Text>
-                                <View className="flex flex-row items-center w-full space-x-1">
-                                    <Text
-                                        className="text-gray-600 text-xs w-3/5 font-medium"
-                                        numberOfLines={1}
-                                    >
-                                        Location, Countrydfsdf
-                                    </Text>
-                                    <Text className="text-gray-600 text-xs text-left font-medium">
-                                        • {2} days ago
-                                    </Text>
-                                </View>
-                            </View>
-                            <View className="flex flex-row items-center space-x-2">
-                                <Text className="text-green-600 font-medium border border-green-600 rounded-full px-[5px] text-center">
-                                    ৳
-                                </Text>
-                                <Text className="text-green-600 text-xs font-medium">
-                                    Negotiable
-                                </Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
             </ScrollView>
         </SafeAreaView>
     );
