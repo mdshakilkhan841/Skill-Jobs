@@ -2,7 +2,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Foundation from "@expo/vector-icons/Foundation";
 import Octicons from "@expo/vector-icons/Octicons";
 import { Tabs, useRouter } from "expo-router";
-import { TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function TabLayout() {
     const router = useRouter();
@@ -11,20 +11,18 @@ export default function TabLayout() {
         <Tabs
             screenOptions={{
                 tabBarActiveTintColor: "red",
-                headerShown: true,
+                headerShown: false,
                 tabBarLabelStyle: {
                     fontSize: 12,
                 },
                 tabBarItemStyle: {
-                    marginBottom: 8,
+                    marginBottom: 12,
                 },
                 tabBarStyle: {
-                    borderRadius: 12,
-                    height: 60,
-                    paddingTop: 10,
-                    marginHorizontal: 10,
-                    marginBottom: 10,
+                    height: 65,
+                    paddingTop: 5,
                 },
+                
                 tabBarButton: (props) => (
                     <TouchableOpacity {...props} activeOpacity={0.6} />
                 ),
@@ -52,27 +50,6 @@ export default function TabLayout() {
                 name="ai"
                 options={{
                     title: "",
-                    // tabBarIcon: ({ color }) => (
-                    //     <View
-                    //         className="flex items-center justify-center bg-sky-400 rounded-full p-2 h-12 w-12 mb-3"
-                    //         style={{
-                    //             shadowColor: "#000",
-                    //             shadowOffset: {
-                    //                 width: 0,
-                    //                 height: 3,
-                    //             },
-                    //             shadowOpacity: 0.29,
-                    //             shadowRadius: 4.65,
-                    //             // elevation: 4,
-                    //         }}
-                    //     >
-                    //         <MaterialCommunityIcons
-                    //             name="star-shooting-outline"
-                    //             size={30}
-                    //             color="white"
-                    //         />
-                    //     </View>
-                    // ),
                     tabBarButton: (props) => (
                         <TouchableOpacity
                             activeOpacity={0.6}
@@ -80,9 +57,9 @@ export default function TabLayout() {
                             onPress={() => {
                                 router.push("/aiResume");
                             }}
-                            className="flex items-center justify-center bg-sky-400 rounded-full p-2 h-14 w-14"
+                            className="flex items-center justify-center bg-sky-500 rounded-full p-2 h-14 w-14"
                             style={{
-                                position:"relative",
+                                position: "relative",
                                 bottom: 15,
                                 shadowColor: "#000",
                                 shadowOffset: {
