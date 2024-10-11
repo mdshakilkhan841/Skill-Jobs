@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
-import React, { useMemo, useState } from "react";
-import TrendingJobCardSkeleton from "./trendingJobCardSkeleton";
+import { useMemo, useState } from "react";
 import { useJobStore } from "../store/jobStore";
+import TrendingJobCardSkeleton from "./trendingJobCardSkeleton";
 
 const TrendingJobCard = ({ job }) => {
     return (
@@ -64,8 +64,6 @@ const TrendingJobList = () => {
         const shuffledJobs = [...totalJobs].sort(() => 0.5 - Math.random());
         setTrendingJobs(shuffledJobs.slice(0, 3));
     }, [totalJobs]);
-
-    console.log("🚀 ~ randomJobs ~ randomJobs:", trendingJobs);
 
     return (
         <View className="flex flex-col mb-3">

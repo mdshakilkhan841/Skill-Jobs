@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useJobStore } from "../store/jobStore";
 import JobCardSkeleton from "./JobCardSkeleton";
@@ -71,8 +71,6 @@ const JobCard = ({ job }) => {
 const JobList = () => {
     const { totalJobs, next_cursor, isLoading, error, getNewJobs } =
         useJobStore();
-    // console.log("🚀 ~ JobList ~ next_cursor:", next_cursor);
-    // console.log("🚀 ~ JobList ~ totalJobs:", totalJobs);
 
     useEffect(() => {
         getNewJobs(); // Fetch the jobs on component mount

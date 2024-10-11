@@ -1,10 +1,8 @@
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
-import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
-import JobCard from "../../components/JobCard";
-import TrendingJobCard from "../../components/TrendingJobCard";
-import JobCardSkeleton from "../../components/JobCardSkeleton";
+import JobList from "../../components/JobCard";
+import TrendingJobList from "../../components/TrendingJobCard";
 import { router } from "expo-router";
 
 const index = () => {
@@ -98,10 +96,10 @@ const index = () => {
                 </View>
 
                 {/* Job Section */}
-                <JobCard />
+                <JobList />
 
                 {/* Trending Job Section */}
-                <TrendingJobCard />
+                <TrendingJobList />
 
                 {/* Sponsor Section */}
                 <View className="flex flex-row items-center justify-center bg-blue-400 my-3 py-2 h-28">
