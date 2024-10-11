@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
 import { useMemo, useState } from "react";
 import { useJobStore } from "../store/jobStore";
-import TrendingJobCardSkeleton from "./trendingJobCardSkeleton";
+import TrendingJobCardSkeleton from "./TrendingJobCardSkeleton";
 
 const TrendingJobCard = ({ job }) => {
     return (
