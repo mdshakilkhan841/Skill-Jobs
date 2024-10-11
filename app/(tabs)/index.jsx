@@ -5,8 +5,19 @@ import { Octicons } from "@expo/vector-icons";
 import JobCard from "../../components/JobCard";
 import TrendingJobCard from "../../components/TrendingJobCard";
 import JobCardSkeleton from "../../components/JobCardSkeleton";
+import { router } from "expo-router";
 
 const index = () => {
+    const category = [
+        { id: 1, name: "Manufacturer" },
+        { id: 2, name: "Software Development" },
+        { id: 3, name: "Education, Tanning and Development" },
+        { id: 4, name: "IT Services and IT Consulting" },
+        { id: 5, name: "Creative" },
+        { id: 6, name: "React Developer" },
+        { id: 7, name: "Faculty Member" },
+    ];
+
     return (
         <SafeAreaView className="bg-sky-500 h-full">
             {/* Header */}
@@ -31,10 +42,11 @@ const index = () => {
             </View>
 
             {/* Search Bar */}
-            <View className="mx-3 py-3">
+            <View className="mx-4 py-3">
                 <TouchableOpacity
                     className="flex flex-row items-center bg-sky-400 border border-slate-200 rounded px-4 h-10 space-x-5"
                     activeOpacity={0.6}
+                    onPress={() => router.push("/searchJobs")}
                 >
                     <View className="flex items-center justify-center">
                         <Octicons name="search" size={24} color="white" />
@@ -84,10 +96,47 @@ const index = () => {
                         <Text className="text-black font-medium">New Jobs</Text>
                     </View>
                 </View>
+
                 {/* Job Section */}
                 <JobCard />
+
                 {/* Trending Job Section */}
                 <TrendingJobCard />
+
+                {/* Sponsor Section */}
+                <View className="flex flex-row items-center justify-center bg-blue-400 my-3 py-2 h-28">
+                    <View className="flex items-center px-5">
+                        <Text
+                            className="text-blue-800 text-lg font-bold li"
+                            style={{ lineHeight: 20 }}
+                        >
+                            Sponsored
+                        </Text>
+                        <Text className="text-black font-medium">Jobs</Text>
+                    </View>
+                </View>
+
+                {/* Category Section */}
+                <View className="flex flex-col mb-6">
+                    <View className="flex flex-row items-center pt-2 pb-3">
+                        <Text className="text-black font-medium">
+                            Browse Job by Category
+                        </Text>
+                    </View>
+                    <View className="flex flex-row flex-wrap justify-betwee gap-2.5">
+                        {category.map((item, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                className="bg-white px-4 py-2 rounded-md border border-slate-300"
+                                activeOpacity={0.5}
+                            >
+                                <Text className="text-gray-600 text-sm font-medium">
+                                    {item.name}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </View>
             </ScrollView>
         </SafeAreaView>
     );

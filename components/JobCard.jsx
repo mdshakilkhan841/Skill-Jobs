@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useJobStore } from "../store/jobStore";
 import JobCardSkeleton from "./JobCardSkeleton";
+import { router } from "expo-router";
 
 const JobCard = ({ job }) => {
     return (
@@ -83,30 +84,15 @@ const JobList = () => {
                 <Text className="text-black font-medium">
                     Recent Job Circulars
                 </Text>
-                <TouchableOpacity activeOpacity={0.6}>
+                <TouchableOpacity
+                    activeOpacity={0.6}
+                    onPress={() => router.push("/viewAllJobs")}
+                >
                     <Text className="text-blue-800 font-medium">View All</Text>
                 </TouchableOpacity>
             </View>
 
             {/* Horizontal Job Card List using FlatList */}
-            {/* <FlatList
-                data={isLoading ? Array(5).fill({}) : totalJobs} // Show skeletons if isLoading, otherwise show jobs
-                keyExtractor={(item, index) =>
-                    isLoading ? index.toString() : item.id.toString()
-                } // Use index as key when isLoading skeletons
-                renderItem={({ item }) =>
-                    isLoading ? (
-                        <JobCardSkeleton /> // Render skeleton if isLoading
-                    ) : (
-                        <JobCard job={item} /> // Render actual job card when not isLoading
-                    )
-                }
-                horizontal={true} // Scrollable horizontally
-                showsHorizontalScrollIndicator={false} // Hide scroll indicator
-                contentContainerStyle={{ gap: 12 }} // Add padding
-                
-            /> */}
-
             <FlatList
                 data={totalJobs}
                 keyExtractor={(item) => item.id.toString()}
@@ -128,6 +114,7 @@ const JobList = () => {
                         <TouchableOpacity
                             className="flex justify-center border border-slate-300 h-60 w-52 rounded-lg bg-white p-3"
                             activeOpacity={0.6}
+                            onPress={() => router.push("/viewAllJobs")}
                         >
                             <Text className="text-gray-600 text-center font-medium">
                                 View All

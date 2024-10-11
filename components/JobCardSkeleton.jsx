@@ -36,8 +36,7 @@ const JobCardSkeleton = () => {
     return (
         <Animated.View
             className="border border-slate-300 h-60 w-52 rounded-lg bg-white p-3 space-y-2.5"
-                        style={animatedStyle}
-
+            style={animatedStyle}
         >
             {/* Image and Level Placeholder */}
             <View className="flex flex-row items-center justify-between space-x-2">
