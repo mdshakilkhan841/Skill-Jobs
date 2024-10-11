@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import JobCard from "../../components/JobCard";
 import TrendingJobCard from "../../components/TrendingJobCard";
+import JobCardSkeleton from "../../components/JobCardSkeleton";
 
 const index = () => {
     return (
@@ -83,13 +84,10 @@ const index = () => {
                         <Text className="text-black font-medium">New Jobs</Text>
                     </View>
                 </View>
-
                 {/* Job Section */}
                 <JobCard />
-
                 {/* Trending Job Section */}
                 <TrendingJobCard />
-
             </ScrollView>
         </SafeAreaView>
     );
