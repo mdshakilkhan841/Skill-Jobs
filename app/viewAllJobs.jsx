@@ -7,10 +7,11 @@ const viewAllJobs = () => {
     const { totalJobs, isLoading } = useJobStore();
 
     return (
-        <SafeAreaView className="bg-sky-500 flex h-full">
+        <SafeAreaView className="flex h-full">
             {/* Body */}
-            <View className="flex bg-gray-100 p-3">
+            <View className="flex bg-gray-100 px-3">
                 <FlatList
+                    className="pt-3"
                     data={totalJobs}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <DetailJobCard job={item} />}
