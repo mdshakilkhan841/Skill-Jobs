@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
 import { useMemo, useState } from "react";
 import { useJobStore } from "../store/jobStore";
-import TrendingJobCardSkeleton from "./TrendingJobCardSkeleton";
+import TrendingJobCardSkeleton from "./skeleton/TrendingJobCardSkeleton";
 
 const TrendingJobCard = ({ job }) => {
     return (
@@ -21,24 +21,24 @@ const TrendingJobCard = ({ job }) => {
                     numberOfLines={2}
                     style={{ lineHeight: 20 }}
                 >
-                    {job.title || "Full Stack Developer"}
+                    {job?.title || "Full Stack Developer"}
                 </Text>
                 <View>
                     <Text
                         className="text-gray-600 text-xs font-medium"
                         numberOfLines={1}
                     >
-                        {job.company || "Company Name"}
+                        {job?.company || "Company Name"}
                     </Text>
                     <View className="flex flex-row items-center w-full space-x-1">
                         <Text
                             className="text-gray-600 text-xs w-3/5 font-medium"
                             numberOfLines={1}
                         >
-                            {job.location || "Location, Country"}
+                            {job?.location || "Location, Country"}
                         </Text>
                         <Text className="text-gray-600 text-xs text-left font-medium">
-                            • {job.daysAgo || 2} days ago
+                            • {job?.daysAgo || 2} days ago
                         </Text>
                     </View>
                 </View>
@@ -47,8 +47,8 @@ const TrendingJobCard = ({ job }) => {
                         ৳
                     </Text>
                     <Text className="text-green-600 text-xs font-medium">
-                        {job.salary_from && job.salary_to
-                            ? `${job.salary_from} - ${job.salary_to}`
+                        {job?.salary_from && job?.salary_to
+                            ? `${job?.salary_from} - ${job?.salary_to}`
                             : "Negotiable"}
                     </Text>
                 </View>

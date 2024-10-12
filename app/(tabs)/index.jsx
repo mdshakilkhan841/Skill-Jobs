@@ -50,7 +50,7 @@ const index = () => {
 
             {/* Body */}
             <ScrollView
-                className="fle-1 bg-gray-100 px-3"
+                className="flex-1 bg-gray-100 px-3"
                 showsVerticalScrollIndicator={false}
             >
                 {/* Count Section */}

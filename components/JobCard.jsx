@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useJobStore } from "../store/jobStore";
-import JobCardSkeleton from "./JobCardSkeleton";
+import JobCardSkeleton from "./skeleton/JobCardSkeleton";
 import { router } from "expo-router";
 
 const JobCard = ({ job }) => {
@@ -23,7 +23,7 @@ const JobCard = ({ job }) => {
                     source={require("../assets/images/react-logo.png")}
                 />
                 <View
-                    className={`flex w-20 rounded-full py-0.5 ${
+                    className={`flex w-[70px] rounded-full py-0.5 ${
                         randomJobLevel === "Beginner"
                             ? "bg-green-400"
                             : randomJobLevel === "Mid Label"
@@ -41,27 +41,27 @@ const JobCard = ({ job }) => {
                 numberOfLines={2}
                 style={{ lineHeight: 20 }}
             >
-                {job.title || "Full Stack Developer"}
+                {job?.title || "Full Stack Developer"}
             </Text>
             <View>
                 <Text
                     className="text-gray-600 text-xs font-medium"
                     numberOfLines={1}
                 >
-                    {job.company || "Company Name"}
+                    {job?.company || "Company Name"}
                 </Text>
                 <View className="flex flex-row items-center w-full space-x-1">
                     <Text
                         className="text-gray-600 text-xs w-3/5 font-medium"
                         numberOfLines={1}
                     >
-                        {job.location || "Location, Country"}
+                        {job?.location || "Location, Country"}
                     </Text>
                     <Text
                         className="text-gray-600 text-xs text-left font-medium"
                         numberOfLines={1}
                     >
-                        • {job.daysAgo || 2} days ago
+                        • {job?.daysAgo || 2} days ago
                     </Text>
                 </View>
             </View>
@@ -70,8 +70,8 @@ const JobCard = ({ job }) => {
                     ৳
                 </Text>
                 <Text className="text-green-600 text-xs font-medium">
-                    {job.salary_from && job.salary_to
-                        ? `${job.salary_from} - ${job.salary_to}`
+                    {job?.salary_from && job?.salary_to
+                        ? `${job?.salary_from} - ${job?.salary_to}`
                         : "Negotiable"}
                 </Text>
             </View>
