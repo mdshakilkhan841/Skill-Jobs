@@ -7,6 +7,7 @@ import JobsCount from "../../components/JobsCount";
 import DetailJobCard from "../../components/DetailJobCard";
 import TrendingJobCardSkeleton from "../../components/skeleton/TrendingJobCardSkeleton";
 import { router } from "expo-router";
+import DetailJobCardSkeleton from "../../components/skeleton/DetailJobCardSkeleton";
 
 const browse = () => {
     const [inputText, setInputText] = useState("");
@@ -65,7 +66,9 @@ const browse = () => {
                                         <TrendingJobCardSkeleton key={index} />
                                     ))}
                             </View>
-                        ) : null
+                        ) : (
+                            <DetailJobCardSkeleton />
+                        )
                     }
                 />
             </View>
