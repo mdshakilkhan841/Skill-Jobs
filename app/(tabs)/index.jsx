@@ -5,8 +5,8 @@ import JobList from "../../components/JobCard";
 import TrendingJobList from "../../components/TrendingJobCard";
 import { router } from "expo-router";
 import CategoryJobs from "../../components/CategoryJobs";
-import { LinearGradient } from "expo-linear-gradient";
 import SponsorSection from "../../components/SponsorSection";
+import JobsCount from "../../components/JobsCount";
 
 const index = () => {
     return (
@@ -54,39 +54,7 @@ const index = () => {
                 showsVerticalScrollIndicator={false}
             >
                 {/* Count Section */}
-                <View className="flex flex-row items-center justify-center bg-white my-3 rounded-lg py-2 border border-slate-300 divide-x divide-slate-300">
-                    <View className="flex items-center px-5">
-                        <Text
-                            className="text-blue-800 text-lg font-bold li"
-                            style={{ lineHeight: 20 }}
-                        >
-                            46
-                        </Text>
-                        <Text className="text-black font-medium">
-                            Live Jobs
-                        </Text>
-                    </View>
-                    <View className="flex items-center px-5">
-                        <Text
-                            className="text-blue-800 text-lg font-bold"
-                            style={{ lineHeight: 20 }}
-                        >
-                            4650
-                        </Text>
-                        <Text className="text-black font-medium">
-                            Companies
-                        </Text>
-                    </View>
-                    <View className="flex items-center px-5">
-                        <Text
-                            className="text-blue-800 text-lg font-bold"
-                            style={{ lineHeight: 20 }}
-                        >
-                            23
-                        </Text>
-                        <Text className="text-black font-medium">New Jobs</Text>
-                    </View>
-                </View>
+                <JobsCount />
 
                 {/* Job Section */}
                 <JobList />
