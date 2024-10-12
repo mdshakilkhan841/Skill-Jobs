@@ -38,7 +38,7 @@ const TrendingJobCard = ({ job }) => {
                             {job.location || "Location, Country"}
                         </Text>
                         <Text className="text-gray-600 text-xs text-left font-medium">
-                            • {job.daysAgo || 2} days ago{" "}
+                            • {job.daysAgo || 2} days ago
                         </Text>
                     </View>
                 </View>
@@ -47,7 +47,9 @@ const TrendingJobCard = ({ job }) => {
                         ৳
                     </Text>
                     <Text className="text-green-600 text-xs font-medium">
-                        {job.salary || "Negotiable"}
+                        {job.salary_from && job.salary_to
+                            ? `${job.salary_from} - ${job.salary_to}`
+                            : "Negotiable"}
                     </Text>
                 </View>
             </View>

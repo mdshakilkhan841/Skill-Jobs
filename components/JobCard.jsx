@@ -1,10 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useJobStore } from "../store/jobStore";
 import JobCardSkeleton from "./JobCardSkeleton";
 import { router } from "expo-router";
 
 const JobCard = ({ job }) => {
+    const jobLevels = ["Beginner", "Mid Label", "Expert"];
+
+    const randomJobLevel = useMemo(() => {
+        const randomIndex = Math.floor(Math.random() * jobLevels.length);
+        return jobLevels[randomIndex];
+    }, []);
+
     return (
         <TouchableOpacity
             className="border border-slate-300 h-60 w-52 rounded-lg bg-white p-3 space-y-3"
@@ -13,12 +20,19 @@ const JobCard = ({ job }) => {
             <View className="flex flex-row items-center justify-between space-x-2">
                 <Image
                     className="h-10 w-10 bg-green-100 rounded-full"
-                    source={require("../assets/images/react-logo.png")} // You can replace this with dynamic job image if available
+                    source={require("../assets/images/react-logo.png")}
                 />
-                <View className="flex w-20 bg-green-400 rounded-full py-0.5">
+                <View
+                    className={`flex w-20 rounded-full py-0.5 ${
+                        randomJobLevel === "Beginner"
+                            ? "bg-green-400"
+                            : randomJobLevel === "Mid Label"
+                            ? "bg-violet-400"
+                            : "bg-orange-400"
+                    }`}
+                >
                     <Text className="text-center text-xs text-slate-700">
-                        {job.level || "Mid Label"}{" "}
-                        {/* Display job level dynamically */}
+                        {randomJobLevel || "Mid Label"}
                     </Text>
                 </View>
             </View>
@@ -27,29 +41,27 @@ const JobCard = ({ job }) => {
                 numberOfLines={2}
                 style={{ lineHeight: 20 }}
             >
-                {job.title || "Full Stack Developer"} {/* Dynamic job title */}
+                {job.title || "Full Stack Developer"}
             </Text>
             <View>
                 <Text
                     className="text-gray-600 text-xs font-medium"
                     numberOfLines={1}
                 >
-                    {job.company || "Company Name"} {/* Dynamic company name */}
+                    {job.company || "Company Name"}
                 </Text>
                 <View className="flex flex-row items-center w-full space-x-1">
                     <Text
                         className="text-gray-600 text-xs w-3/5 font-medium"
                         numberOfLines={1}
                     >
-                        {job.location || "Location, Country"}{" "}
-                        {/* Dynamic location */}
+                        {job.location || "Location, Country"}
                     </Text>
                     <Text
                         className="text-gray-600 text-xs text-left font-medium"
                         numberOfLines={1}
                     >
-                        • {job.daysAgo || 2} days ago{" "}
-                        {/* Dynamic posting date */}
+                        • {job.daysAgo || 2} days ago
                     </Text>
                 </View>
             </View>
@@ -58,7 +70,9 @@ const JobCard = ({ job }) => {
                     ৳
                 </Text>
                 <Text className="text-green-600 text-xs font-medium">
-                    {job.salary || "Negotiable"} {/* Dynamic salary */}
+                    {job.salary_from && job.salary_to
+                        ? `${job.salary_from} - ${job.salary_to}`
+                        : "Negotiable"}
                 </Text>
             </View>
             <Text className="text-white text-base font-semibold rounded-full px-[5px] text-center py-1 bg-blue-800 ">
