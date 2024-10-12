@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, TextInput, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useJobStore } from "../../store/jobStore";
 import JobsCount from "../../components/JobsCount";
 import DetailJobCard from "../../components/DetailJobCard";
@@ -11,7 +11,14 @@ import DetailJobCardSkeleton from "../../components/skeleton/DetailJobCardSkelet
 
 const browse = () => {
     const [inputText, setInputText] = useState("");
-    const { totalJobs, isLoading } = useJobStore();
+    const { totalJobs, getNewJobs, isLoading, next_cursor } = useJobStore();
+
+    // Function to fetch more jobs when scrolling to the bottom
+    const handleLoadMoreJobs = () => {
+        if (!isLoading && next_cursor) {
+            getNewJobs(); // Fetch more jobs only if not loading and next_cursor is available
+        }
+    };
 
     return (
         <SafeAreaView className="bg-sky-500 h-full">
@@ -52,24 +59,25 @@ const browse = () => {
             <View className="flex-1 bg-gray-100 px-3 pb-3">
                 <FlatList
                     data={totalJobs}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item.id + Math.random().toString()}
                     renderItem={({ item }) => <DetailJobCard job={item} />}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ gap: 12 }}
                     ListHeaderComponent={<JobsCount />}
                     ListFooterComponent={
                         isLoading ? (
-                            <View className="flex flex-row" style={{ gap: 12 }}>
+                            <View className="flex" style={{ gap: 12 }}>
                                 {Array(3)
                                     .fill(null)
                                     .map((_, index) => (
-                                        <TrendingJobCardSkeleton key={index} />
+                                        <DetailJobCardSkeleton key={index} />
                                     ))}
                             </View>
-                        ) : (
-                            <DetailJobCardSkeleton />
-                        )
+                        ) : null
                     }
+                    // Trigger function when the user scrolls to the end
+                    onEndReached={handleLoadMoreJobs}
+                    // onEndReachedThreshold={0.5} // Fetch more jobs when 50% of the last item is visible
                 />
             </View>
         </SafeAreaView>

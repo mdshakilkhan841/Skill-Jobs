@@ -75,7 +75,7 @@ const TrendingJobList = () => {
 
             <FlatList
                 data={trendingJobs}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.id + Math.random().toString()}
                 renderItem={({ item }) => <TrendingJobCard job={item} />} // Render each job card
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}

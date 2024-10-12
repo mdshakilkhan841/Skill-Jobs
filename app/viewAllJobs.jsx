@@ -13,7 +13,7 @@ const viewAllJobs = () => {
                 <FlatList
                     className="pt-3"
                     data={totalJobs}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item.id + Math.random().toString()}
                     renderItem={({ item }) => <DetailJobCard job={item} />}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ gap: 12 }}
