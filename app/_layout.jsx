@@ -4,6 +4,10 @@ export default function RootLayout() {
     return (
         <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+                name="viewAllJobs"
+                options={{ headerShown: true, title: "Recent Opening" }}
+            />
         </Stack>
     );
 }
