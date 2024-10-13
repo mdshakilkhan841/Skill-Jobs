@@ -1,7 +1,7 @@
 import { View, TouchableOpacity, TextInput, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useJobStore } from "../../../store/jobStore";
 import JobsCount from "../../../components/JobsCount";
 import DetailJobCard from "../../../components/DetailJobCard";
@@ -10,14 +10,37 @@ import DetailJobCardSkeleton from "../../../components/skeleton/DetailJobCardSke
 
 const browse = () => {
     const [inputText, setInputText] = useState("");
+    const [filteredJobs, setFilteredJobs] = useState([]);
     const { totalJobs, getNewJobs, isLoading, next_cursor } = useJobStore();
 
-    // Function to fetch more jobs when scrolling to the bottom
     const handleLoadMoreJobs = () => {
         if (!isLoading && next_cursor) {
-            getNewJobs(); // Fetch more jobs only if not loading and next_cursor is available
+            getNewJobs();
         }
     };
+
+    useMemo(() => {
+        const debounceTimeout = setTimeout(() => {
+            const filtered = totalJobs.filter((job) => {
+                // Parse qualifications from JSON string to array
+                const qualificationsArray = JSON.parse(job.qualifications);
+
+                return (
+                    job.title.toLowerCase().includes(inputText.toLowerCase()) ||
+                    job.company
+                        .toLowerCase()
+                        .includes(inputText.toLowerCase()) ||
+                    qualificationsArray.some((q) =>
+                        q.toLowerCase().includes(inputText.toLowerCase())
+                    )
+                );
+            });
+            setFilteredJobs(filtered);
+        }, 300);
+
+        // Cleanup function to clear the timeout if input changes quickly
+        return () => clearTimeout(debounceTimeout);
+    }, [inputText, totalJobs]);
 
     return (
         <SafeAreaView className="bg-sky-500 h-full">
@@ -57,7 +80,7 @@ const browse = () => {
             {/* Body */}
             <View className="flex-1 bg-gray-100 px-3 pb-3">
                 <FlatList
-                    data={totalJobs}
+                    data={filteredJobs.length ? filteredJobs : totalJobs}
                     keyExtractor={(item) => item.id + Math.random().toString()}
                     renderItem={({ item }) => <DetailJobCard job={item} />}
                     showsVerticalScrollIndicator={false}
