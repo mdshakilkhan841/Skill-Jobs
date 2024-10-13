@@ -1,14 +1,19 @@
 import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
-import JobList from "../../components/JobCard";
-import TrendingJobList from "../../components/TrendingJobCard";
 import { router } from "expo-router";
-import CategoryJobs from "../../components/CategoryJobs";
-import SponsorSection from "../../components/SponsorSection";
-import JobsCount from "../../components/JobsCount";
+import JobsCount from "../../../components/JobsCount";
+import JobList from "../../../components/JobCard";
+import TrendingJobList from "../../../components/TrendingJobCard";
+import SponsorSection from "../../../components/SponsorSection";
+import CategoryJobs from "../../../components/CategoryJobs";
+
+import { useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
 
 const index = () => {
+    const navigation = useNavigation();
+
     return (
         <SafeAreaView className="bg-sky-500 h-full">
             {/* Header */}
@@ -17,6 +22,9 @@ const index = () => {
                     <TouchableOpacity
                         className="flex items-center justify-center h-full px-4 rounded-full"
                         activeOpacity={0.6}
+                        onPress={() =>
+                            navigation.dispatch(DrawerActions.openDrawer())
+                        }
                     >
                         <Octicons name="three-bars" size={28} color="white" />
                     </TouchableOpacity>
@@ -27,7 +35,7 @@ const index = () => {
                 <TouchableOpacity className="flex items-center justify-center px-4 h-full">
                     <Image
                         className="h-10 w-10 bg-white rounded-full"
-                        source={require("../../assets/images/react-logo.png")}
+                        source={require("../../../assets/images/react-logo.png")}
                     />
                 </TouchableOpacity>
             </View>
