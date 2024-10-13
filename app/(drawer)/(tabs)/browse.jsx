@@ -35,7 +35,12 @@ const browse = () => {
                     )
                 );
             });
-            setFilteredJobs(filtered);
+
+            if (inputText?.length > 0) {
+                setFilteredJobs(filtered);
+            } else {
+                setFilteredJobs([]);
+            }
         }, 300);
 
         // Cleanup function to clear the timeout if input changes quickly
