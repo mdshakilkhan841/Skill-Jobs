@@ -1,7 +1,13 @@
-import { View, TouchableOpacity, TextInput, FlatList } from "react-native";
+import {
+    View,
+    TouchableOpacity,
+    TextInput,
+    FlatList,
+    Text,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useJobStore } from "../../../store/jobStore";
 import JobsCount from "../../../components/JobsCount";
 import DetailJobCard from "../../../components/DetailJobCard";
@@ -11,6 +17,7 @@ import DetailJobCardSkeleton from "../../../components/skeleton/DetailJobCardSke
 const browse = () => {
     const [inputText, setInputText] = useState("");
     const [filteredJobs, setFilteredJobs] = useState([]);
+    const [searchLoading, setSearchLoading] = useState(false);
     const { totalJobs, getNewJobs, isLoading, next_cursor } = useJobStore();
 
     const handleLoadMoreJobs = () => {
@@ -19,33 +26,38 @@ const browse = () => {
         }
     };
 
-    useMemo(() => {
-        const debounceTimeout = setTimeout(() => {
-            const filtered = totalJobs.filter((job) => {
-                // Parse qualifications from JSON string to array
-                const qualificationsArray = JSON.parse(job.qualifications);
+    useEffect(() => {
+        if (inputText.length > 0) {
+            setSearchLoading(true);
+            const debounceTimeout = setTimeout(() => {
+                const filtered = totalJobs.filter((job) => {
+                    // Parse qualifications from JSON string to array
+                    const qualificationsArray = JSON.parse(job.qualifications);
 
-                return (
-                    job.title.toLowerCase().includes(inputText.toLowerCase()) ||
-                    job.company
-                        .toLowerCase()
-                        .includes(inputText.toLowerCase()) ||
-                    qualificationsArray.some((q) =>
-                        q.toLowerCase().includes(inputText.toLowerCase())
-                    )
-                );
-            });
+                    return (
+                        job.title
+                            .toLowerCase()
+                            .includes(inputText?.toLowerCase()) ||
+                        job.company
+                            .toLowerCase()
+                            .includes(inputText?.toLowerCase()) ||
+                        qualificationsArray.some((q) =>
+                            q.toLowerCase().includes(inputText?.toLowerCase())
+                        )
+                    );
+                });
 
-            if (inputText?.length > 0) {
                 setFilteredJobs(filtered);
-            } else {
-                setFilteredJobs([]);
-            }
-        }, 300);
+                setSearchLoading(false);
+            }, 300);
 
-        // Cleanup function to clear the timeout if input changes quickly
-        return () => clearTimeout(debounceTimeout);
-    }, [inputText, totalJobs]);
+            // Cleanup function to clear the timeout if input changes quickly
+            return () => clearTimeout(debounceTimeout);
+        } else {
+            setFilteredJobs([]);
+            setSearchLoading(false);
+        }
+    }, [inputText]);
 
     return (
         <SafeAreaView className="bg-sky-500 h-full">
@@ -68,7 +80,6 @@ const browse = () => {
                     />
                     <TouchableOpacity
                         className="px-2 h-full flex items-center justify-center"
-                        activeOpacity={0.6}
                         onPress={() => setInputText("")}
                     >
                         <Octicons name="x" size={24} color="#94a3b8" />
@@ -84,28 +95,46 @@ const browse = () => {
 
             {/* Body */}
             <View className="flex-1 bg-gray-100 px-3 pb-3">
-                <FlatList
-                    data={filteredJobs.length ? filteredJobs : totalJobs}
-                    keyExtractor={(item) => item.id + Math.random().toString()}
-                    renderItem={({ item }) => <DetailJobCard job={item} />}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{ gap: 12 }}
-                    ListHeaderComponent={<JobsCount />}
-                    ListFooterComponent={
-                        isLoading ? (
-                            <View className="flex" style={{ gap: 12 }}>
-                                {Array(3)
-                                    .fill(null)
-                                    .map((_, index) => (
-                                        <DetailJobCardSkeleton key={index} />
-                                    ))}
-                            </View>
-                        ) : null
-                    }
-                    // Trigger function when the user scrolls to the end
-                    onEndReached={handleLoadMoreJobs}
-                    // onEndReachedThreshold={0.5} // Fetch more jobs when 50% of the last item is visible
-                />
+                {searchLoading ? (
+                    <View className="flex mt-3" style={{ gap: 12 }}>
+                        {Array(6)
+                            .fill(null)
+                            .map((_, index) => (
+                                <DetailJobCardSkeleton key={index} />
+                            ))}
+                    </View>
+                ) : filteredJobs.length === 0 && inputText.length > 0 ? (
+                    <View className="mt-20">
+                        <Text className="text-center text-lg font-semibold mt-30">
+                            No Jobs Found
+                        </Text>
+                    </View>
+                ) : (
+                    <FlatList
+                        data={filteredJobs.length ? filteredJobs : totalJobs}
+                        keyExtractor={(item) =>
+                            item.id + Math.random().toString()
+                        }
+                        renderItem={({ item }) => <DetailJobCard job={item} />}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{ gap: 12 }}
+                        ListHeaderComponent={<JobsCount />}
+                        ListFooterComponent={
+                            isLoading ? (
+                                <View className="flex" style={{ gap: 12 }}>
+                                    {Array(3)
+                                        .fill(null)
+                                        .map((_, index) => (
+                                            <DetailJobCardSkeleton
+                                                key={index}
+                                            />
+                                        ))}
+                                </View>
+                            ) : null
+                        }
+                        onEndReached={handleLoadMoreJobs}
+                    />
+                )}
             </View>
         </SafeAreaView>
     );
