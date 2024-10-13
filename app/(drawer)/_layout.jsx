@@ -13,6 +13,14 @@ export default function Layout() {
                         title: "Find Your Dream Jobs",
                     }}
                 />
+                <Drawer.Screen
+                    name="settings"
+                    options={{
+                        headerShown: false,
+                        drawerLabel: "Settings",
+                        title: "Find Your Dream Jobs",
+                    }}
+                />
             </Drawer>
         </GestureHandlerRootView>
     );
