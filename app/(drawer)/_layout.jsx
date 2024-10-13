@@ -6,19 +6,11 @@ export default function Layout() {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Drawer>
                 <Drawer.Screen
-                    name="index"
+                    name="(tabs)"
                     options={{
                         headerShown: false,
                         drawerLabel: "Home",
                         title: "Find Your Dream Jobs",
-                        headerTitleStyle: {
-                            fontSize: 16,
-                            color: "white",
-                        },
-                        headerStyle: {
-                            backgroundColor: "#0ea5e9",
-                        },
-                        headerTintColor: "white",
                     }}
                 />
             </Drawer>

@@ -9,7 +9,7 @@ const viewAllJobs = () => {
     return (
         <SafeAreaView className="flex h-full">
             {/* Body */}
-            <View className="flex bg-gray-100 px-3">
+            <View className="flex bg-gray-100 px-3 pb-3">
                 <FlatList
                     className="pt-3"
                     data={totalJobs}

@@ -2,12 +2,11 @@ import { View, TouchableOpacity, TextInput, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
-import { useJobStore } from "../../store/jobStore";
-import JobsCount from "../../components/JobsCount";
-import DetailJobCard from "../../components/DetailJobCard";
-import TrendingJobCardSkeleton from "../../components/skeleton/TrendingJobCardSkeleton";
+import { useJobStore } from "../../../store/jobStore";
+import JobsCount from "../../../components/JobsCount";
+import DetailJobCard from "../../../components/DetailJobCard";
 import { router } from "expo-router";
-import DetailJobCardSkeleton from "../../components/skeleton/DetailJobCardSkeleton";
+import DetailJobCardSkeleton from "../../../components/skeleton/DetailJobCardSkeleton";
 
 const browse = () => {
     const [inputText, setInputText] = useState("");
@@ -23,7 +22,7 @@ const browse = () => {
     return (
         <SafeAreaView className="bg-sky-500 h-full">
             {/* Header */}
-            <View className="flex flex-row h-16 items-center justify-between my-2">
+            <View className="flex flex-row h-10 items-center justify-between mt-3 mb-5">
                 <TouchableOpacity
                     className="flex items-center justify-center h-full px-4 rounded-full"
                     activeOpacity={0.6}

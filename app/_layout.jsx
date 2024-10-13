@@ -1,5 +1,13 @@
-import { Slot } from "expo-router";
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
-    return <Slot />;
+    return (
+        <Stack>
+            <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+            <Stack.Screen
+                name="viewAllJobs"
+                options={{ headerShown: true, title: "Recent Opening" }}
+            />
+        </Stack>
+    );
 }
