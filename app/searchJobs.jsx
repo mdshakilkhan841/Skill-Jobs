@@ -17,10 +17,13 @@ import CategoryJobs from "../components/CategoryJobs";
 
 const searchJobs = () => {
     const [inputText, setInputText] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [filteredJobs, setFilteredJobs] = useState([]);
-    const { totalJobs, isLoading } = useJobStore();
+    const { totalJobs } = useJobStore();
 
-    useMemo(() => {
+    useEffect(() => {
+        inputText.length > 0 && setIsLoading(true);
+
         const debounceTimeout = setTimeout(() => {
             const filtered = totalJobs.filter((job) => {
                 // Parse qualifications from JSON string to array
@@ -38,11 +41,14 @@ const searchJobs = () => {
                     )
                 );
             });
+
             if (inputText?.length > 0) {
                 setFilteredJobs(filtered);
             } else {
                 setFilteredJobs([]);
             }
+
+            setIsLoading(false);
         }, 300);
 
         // Cleanup function to clear the timeout if input changes quickly
@@ -87,30 +93,29 @@ const searchJobs = () => {
             {/* Body */}
             <View className="flex-1 bg-gray-100 px-3 pb-3">
                 <JobsCount />
-                {filteredJobs.length === 0 ? (
+                {isLoading ? (
+                    <View className="flex" style={{ gap: 12 }}>
+                        {Array(5)
+                            .fill(null)
+                            .map((_, index) => (
+                                <DetailJobCardSkeleton key={index} />
+                            ))}
+                    </View>
+                ) : filteredJobs.length === 0 && inputText.length === 0 ? (
                     <CategoryJobs />
+                ) : filteredJobs.length === 0 ? (
+                    <Text className="text-center text-lg font-semibold">
+                        No Jobs Found
+                    </Text>
                 ) : (
                     <FlatList
-                        data={filteredJobs.length ? filteredJobs : totalJobs}
+                        data={filteredJobs}
                         keyExtractor={(item) =>
                             item.id + Math.random().toString()
                         }
                         renderItem={({ item }) => <DetailJobCard job={item} />}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ gap: 12 }}
-                        ListFooterComponent={
-                            isLoading ? (
-                                <View className="flex" style={{ gap: 12 }}>
-                                    {Array(3)
-                                        .fill(null)
-                                        .map((_, index) => (
-                                            <DetailJobCardSkeleton
-                                                key={index}
-                                            />
-                                        ))}
-                                </View>
-                            ) : null
-                        }
                     />
                 )}
             </View>
@@ -119,11 +124,3 @@ const searchJobs = () => {
 };
 
 export default searchJobs;
-
-{
-    /* <View className="flex-1 bg-gray-100 px-3 pb-3">
-                        <Text className="text-center text-lg font-semibold">
-                            No Jobs Found
-                        </Text>
-                    </View> */
-}
