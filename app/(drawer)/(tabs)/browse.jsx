@@ -104,11 +104,9 @@ const browse = () => {
                             ))}
                     </View>
                 ) : filteredJobs.length === 0 && inputText.length > 0 ? (
-                    <View className="mt-20">
-                        <Text className="text-center text-lg font-semibold mt-30">
-                            No Jobs Found
-                        </Text>
-                    </View>
+                    <Text className="text-center text-lg font-semibold py-20">
+                        No Jobs Found
+                    </Text>
                 ) : (
                     <FlatList
                         data={filteredJobs.length ? filteredJobs : totalJobs}

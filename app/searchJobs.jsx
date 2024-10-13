@@ -17,42 +17,41 @@ import CategoryJobs from "../components/CategoryJobs";
 
 const searchJobs = () => {
     const [inputText, setInputText] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
+    const [searchLoading, setSearchLoading] = useState(false);
     const [filteredJobs, setFilteredJobs] = useState([]);
     const { totalJobs } = useJobStore();
 
     useEffect(() => {
-        inputText.length > 0 && setIsLoading(true);
+        if (inputText.length > 0) {
+            setSearchLoading(true);
+            const debounceTimeout = setTimeout(() => {
+                const filtered = totalJobs.filter((job) => {
+                    // Parse qualifications from JSON string to array
+                    const qualificationsArray = JSON.parse(job.qualifications);
 
-        const debounceTimeout = setTimeout(() => {
-            const filtered = totalJobs.filter((job) => {
-                // Parse qualifications from JSON string to array
-                const qualificationsArray = JSON.parse(job.qualifications);
+                    return (
+                        job.title
+                            .toLowerCase()
+                            .includes(inputText?.toLowerCase()) ||
+                        job.company
+                            .toLowerCase()
+                            .includes(inputText?.toLowerCase()) ||
+                        qualificationsArray.some((q) =>
+                            q.toLowerCase().includes(inputText?.toLowerCase())
+                        )
+                    );
+                });
 
-                return (
-                    job.title
-                        .toLowerCase()
-                        .includes(inputText?.toLowerCase()) ||
-                    job.company
-                        .toLowerCase()
-                        .includes(inputText?.toLowerCase()) ||
-                    qualificationsArray.some((q) =>
-                        q.toLowerCase().includes(inputText?.toLowerCase())
-                    )
-                );
-            });
-
-            if (inputText?.length > 0) {
                 setFilteredJobs(filtered);
-            } else {
-                setFilteredJobs([]);
-            }
+                setSearchLoading(false);
+            }, 300);
 
-            setIsLoading(false);
-        }, 300);
-
-        // Cleanup function to clear the timeout if input changes quickly
-        return () => clearTimeout(debounceTimeout);
+            // Cleanup function to clear the timeout if input changes quickly
+            return () => clearTimeout(debounceTimeout);
+        } else {
+            setFilteredJobs([]);
+            setSearchLoading(false);
+        }
     }, [inputText]);
 
     return (
@@ -93,7 +92,7 @@ const searchJobs = () => {
             {/* Body */}
             <View className="flex-1 bg-gray-100 px-3 pb-3">
                 <JobsCount />
-                {isLoading ? (
+                {searchLoading ? (
                     <View className="flex" style={{ gap: 12 }}>
                         {Array(5)
                             .fill(null)
@@ -104,7 +103,7 @@ const searchJobs = () => {
                 ) : filteredJobs.length === 0 && inputText.length === 0 ? (
                     <CategoryJobs />
                 ) : filteredJobs.length === 0 ? (
-                    <Text className="text-center text-lg font-semibold">
+                    <Text className="text-center text-lg font-semibold py-20">
                         No Jobs Found
                     </Text>
                 ) : (
