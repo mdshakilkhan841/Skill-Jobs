@@ -1,4 +1,5 @@
 import { Octicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useMemo } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 const DetailJobCard = ({ job }) => {
@@ -13,6 +14,12 @@ const DetailJobCard = ({ job }) => {
         <TouchableOpacity
             className="flex  border border-slate-300 w-full rounded-lg bg-white p-3 space-y-2"
             activeOpacity={0.6}
+            onPress={() =>
+                router.push({
+                    pathname: "/jobDetails",
+                    params: { job: JSON.stringify(job) },
+                })
+            }
         >
             <View className="flex flex-row w-full space-x-2">
                 <View className="flex items-center justify-center">

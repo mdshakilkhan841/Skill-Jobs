@@ -2,12 +2,19 @@ import { View, Text, TouchableOpacity, Image, FlatList } from "react-native";
 import { useMemo, useState } from "react";
 import { useJobStore } from "../store/jobStore";
 import TrendingJobCardSkeleton from "./skeleton/TrendingJobCardSkeleton";
+import { router } from "expo-router";
 
 const TrendingJobCard = ({ job }) => {
     return (
         <TouchableOpacity
             className="flex flex-row  border border-slate-300 w-72 rounded-lg bg-white p-3 space-x-3"
             activeOpacity={0.5}
+            onPress={() =>
+                router.push({
+                    pathname: "/jobDetails",
+                    params: { job: JSON.stringify(job) },
+                })
+            }
         >
             <View className="flex items-center justify-center w-1/5">
                 <Image

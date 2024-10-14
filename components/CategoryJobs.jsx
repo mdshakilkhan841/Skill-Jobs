@@ -4,7 +4,6 @@ import { useJobStore } from "../store/jobStore";
 
 const CategoryJobs = () => {
     const { jobCategory } = useJobStore();
-    console.log("🚀 ~ CategoryJobs ~ jobCategory:", jobCategory);
     const defaultCategory = [
         "Manufacturer",
         "Software Development",

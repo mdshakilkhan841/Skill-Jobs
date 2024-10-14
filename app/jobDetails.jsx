@@ -102,7 +102,7 @@ const JobDetails = () => {
             </Animated.View>
 
             <ScrollView
-                className="flex-1 bg-gray-200 pb-3"
+                className="flex-1 bg-gray-100 pb-3"
                 showsVerticalScrollIndicator={false}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -249,7 +249,7 @@ const JobDetails = () => {
                 </View>
 
                 {/* bottom spacer */}
-                <View className="h-24" />
+                <View className="h-28" />
             </ScrollView>
 
             <View className="absolute bottom-3 w-full">
