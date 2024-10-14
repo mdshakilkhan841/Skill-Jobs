@@ -86,14 +86,10 @@ const JobCard = ({ job }) => {
 const JobList = () => {
     const {
         totalJobs,
-        next_cursor,
-        jobCategory,
         isLoading,
         error,
         getNewJobs,
     } = useJobStore();
-
-    // console.log("🚀 ~ JobList ~ totalJobs:", next_cursor);
 
     useEffect(() => {
         getNewJobs(); // Fetch the jobs on component mount
