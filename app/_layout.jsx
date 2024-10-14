@@ -20,6 +20,14 @@ export default function RootLayout() {
                     headerTitleAlign: "center",
                 }}
             />
+            <Stack.Screen
+                name="jobDetails"
+                options={{
+                    headerShown: false,
+                    title: "Job Details",
+                    headerTitleAlign: "center",
+                }}
+            />
         </Stack>
     );
 }
