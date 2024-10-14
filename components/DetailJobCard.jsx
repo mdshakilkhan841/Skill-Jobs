@@ -10,7 +10,10 @@ const DetailJobCard = ({ job }) => {
     }, []);
 
     return (
-        <View className="flex  border border-slate-300 w-full rounded-lg bg-white p-3 space-y-2">
+        <TouchableOpacity
+            className="flex  border border-slate-300 w-full rounded-lg bg-white p-3 space-y-2"
+            activeOpacity={0.6}
+        >
             <View className="flex flex-row w-full space-x-2">
                 <View className="flex items-center justify-center">
                     <Image
@@ -56,7 +59,7 @@ const DetailJobCard = ({ job }) => {
                         </View>
                     </View>
                 </View>
-                <TouchableOpacity className="flex">
+                <TouchableOpacity className="absolute -right-3 -top-2 px-3 py-2 rounded-full">
                     <Octicons name="bookmark" size={24} color="black" />
                 </TouchableOpacity>
             </View>
@@ -81,7 +84,9 @@ const DetailJobCard = ({ job }) => {
                 </View>
                 <View className="flex flex-row items-center space-x-2">
                     <View className="border border-green-600 rounded-full px-[4px]">
-                        <Text className="text-xs text-green-600 font-medium">৳</Text>
+                        <Text className="text-xs text-green-600 font-medium">
+                            ৳
+                        </Text>
                     </View>
                     <Text className="text-green-600 text-xs font-medium">
                         {job?.salary_from && job?.salary_to
@@ -90,7 +95,7 @@ const DetailJobCard = ({ job }) => {
                     </Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 
