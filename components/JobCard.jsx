@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { useJobStore } from "../store/jobStore";
 import JobCardSkeleton from "./skeleton/JobCardSkeleton";
 import { router } from "expo-router";
+import { Octicons } from "@expo/vector-icons";
 
 const JobCard = ({ job }) => {
     const jobLevels = ["Beginner", "Mid Label", "Expert"];
@@ -83,8 +84,14 @@ const JobCard = ({ job }) => {
 };
 
 const JobList = () => {
-    const { totalJobs, next_cursor, isLoading, error, getNewJobs } =
-        useJobStore();
+    const {
+        totalJobs,
+        next_cursor,
+        jobCategory,
+        isLoading,
+        error,
+        getNewJobs,
+    } = useJobStore();
 
     // console.log("🚀 ~ JobList ~ totalJobs:", next_cursor);
 
@@ -123,6 +130,17 @@ const JobList = () => {
                                 .map((_, index) => (
                                     <JobCardSkeleton key={index} />
                                 ))}
+                        </View>
+                    ) : error ? (
+                        <View
+                            className="flex flex-row items-center justify-center border border-slate-300 h-60 w-52 rounded-lg bg-white p-3 space-x-2"
+                            activeOpacity={0.6}
+                            onPress={() => router.push("/viewAllJobs")}
+                        >
+                            <Octicons name="alert" size={24} color="red" />
+                            <Text className="text-gray-600 text-center font-medium">
+                                Something went wrong
+                            </Text>
                         </View>
                     ) : (
                         <TouchableOpacity

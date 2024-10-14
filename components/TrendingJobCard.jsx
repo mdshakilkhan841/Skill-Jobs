@@ -58,7 +58,7 @@ const TrendingJobCard = ({ job }) => {
 };
 
 const TrendingJobList = () => {
-    const { totalJobs, isLoading } = useJobStore();
+    const { totalJobs, isLoading, error } = useJobStore();
     const [trendingJobs, setTrendingJobs] = useState([]);
 
     useMemo(() => {
@@ -72,27 +72,30 @@ const TrendingJobList = () => {
             <View className="flex flex-row items-center pt-2 pb-3">
                 <Text className="text-black font-medium">Trending Jobs</Text>
             </View>
-
-            <FlatList
-                data={trendingJobs}
-                keyExtractor={(item) => item.id + Math.random().toString()}
-                renderItem={({ item }) => <TrendingJobCard job={item} />} // Render each job card
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ gap: 12 }}
-                // Showing skeleton on loading state
-                ListFooterComponent={
-                    isLoading ? (
-                        <View className="flex flex-row" style={{ gap: 12 }}>
-                            {Array(3)
-                                .fill(null)
-                                .map((_, index) => (
-                                    <TrendingJobCardSkeleton key={index} />
-                                ))}
-                        </View>
-                    ) : null
-                }
-            />
+            {error ? (
+                <TrendingJobCardSkeleton />
+            ) : (
+                <FlatList
+                    data={trendingJobs}
+                    keyExtractor={(item) => item.id + Math.random().toString()}
+                    renderItem={({ item }) => <TrendingJobCard job={item} />} // Render each job card
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ gap: 12 }}
+                    // Showing skeleton on loading state
+                    ListFooterComponent={
+                        isLoading ? (
+                            <View className="flex flex-row" style={{ gap: 12 }}>
+                                {Array(3)
+                                    .fill(null)
+                                    .map((_, index) => (
+                                        <TrendingJobCardSkeleton key={index} />
+                                    ))}
+                            </View>
+                        ) : null
+                    }
+                />
+            )}
         </View>
     );
 };
