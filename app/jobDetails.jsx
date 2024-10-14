@@ -223,10 +223,7 @@ const JobDetails = () => {
                             <Text className="text-gray-600 text-lg font-bold">
                                 Position Summary
                             </Text>
-                            <Text
-                                className="text-gray-600 text-base"
-                                style={{ lineHeight: 20 }}
-                            >
+                            <Text className="text-gray-600">
                                 {jobDetails?.description || " "}
                             </Text>
                         </View>
@@ -236,11 +233,7 @@ const JobDetails = () => {
                                 Job Requirement
                             </Text>
                             {jobQualification.map((item, index) => (
-                                <Text
-                                    key={index}
-                                    className="text-gray-600 text-base"
-                                    style={{ lineHeight: 18 }}
-                                >
+                                <Text key={index} className="text-gray-600">
                                     • {item}
                                 </Text>
                             ))}
