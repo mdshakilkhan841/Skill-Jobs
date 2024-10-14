@@ -19,7 +19,7 @@ const CategoryJobs = () => {
                     Browse Job by Category
                 </Text>
             </View>
-            <View className="flex flex-row flex-wrap justify-betwee gap-2.5">
+            <View className="flex flex-row flex-wrap justify-center gap-2.5">
                 {category.map((item, index) => (
                     <TouchableOpacity
                         key={index}
