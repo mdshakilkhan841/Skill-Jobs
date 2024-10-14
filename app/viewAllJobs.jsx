@@ -1,10 +1,16 @@
 import { View, FlatList, SafeAreaView } from "react-native";
 import { useJobStore } from "../store/jobStore";
 import DetailJobCard from "../components/DetailJobCard";
-import TrendingJobCardSkeleton from "../components/skeleton/TrendingJobCardSkeleton";
+import DetailJobCardSkeleton from "../components/skeleton/DetailJobCardSkeleton";
 
 const viewAllJobs = () => {
-    const { totalJobs, isLoading } = useJobStore();
+    const { totalJobs, getNewJobs, next_cursor, isLoading } = useJobStore();
+
+    const handleLoadMoreJobs = () => {
+        if (!isLoading && next_cursor) {
+            getNewJobs();
+        }
+    };
 
     return (
         <SafeAreaView className="flex h-full">
@@ -19,15 +25,17 @@ const viewAllJobs = () => {
                     contentContainerStyle={{ gap: 12 }}
                     ListFooterComponent={
                         isLoading ? (
-                            <View className="flex flex-row" style={{ gap: 12 }}>
+                            <View className="flex" style={{ gap: 12 }}>
                                 {Array(3)
                                     .fill(null)
                                     .map((_, index) => (
-                                        <TrendingJobCardSkeleton key={index} />
+                                        <DetailJobCardSkeleton key={index} />
                                     ))}
                             </View>
                         ) : null
                     }
+                    onEndReached={handleLoadMoreJobs}
+                    // onEndReachedThreshold={0.5} // Fetch more jobs when 50% of the last item is visible
                 />
             </View>
         </SafeAreaView>

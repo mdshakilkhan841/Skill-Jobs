@@ -134,6 +134,7 @@ const browse = () => {
                             ) : null
                         }
                         onEndReached={handleLoadMoreJobs}
+                        // onEndReachedThreshold={0.5} // Fetch more jobs when 50% of the last item is visible
                     />
                 )}
             </View>
