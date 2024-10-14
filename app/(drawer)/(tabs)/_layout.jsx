@@ -10,7 +10,7 @@ export default function TabLayout() {
     return (
         <Tabs
             screenOptions={{
-                tabBarActiveTintColor: "red",
+                tabBarActiveTintColor: "#0284c7",
                 headerShown: false,
                 tabBarLabelStyle: {
                     fontSize: 12,
@@ -22,10 +22,28 @@ export default function TabLayout() {
                     height: 65,
                     paddingTop: 5,
                 },
-                
-                tabBarButton: (props) => (
-                    <TouchableOpacity {...props} activeOpacity={0.6} />
-                ),
+                tabBarButton: (props) => {
+                    const isActive = props.accessibilityState.selected;
+                    return (
+                        <TouchableOpacity
+                            {...props}
+                            activeOpacity={0.6}
+                            className={isActive && "border-b-4 border-sky-600"}
+                            style={{
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems: "center",
+                                backgroundColor: isActive
+                                    ? "rgb(216, 249, 254)"
+                                    : "transparent",
+                                borderRadius: 5,
+                                marginHorizontal: 10,
+                                paddingVertical: 5,
+                                marginBottom: 5,
+                            }}
+                        />
+                    );
+                },
             }}
         >
             <Tabs.Screen
