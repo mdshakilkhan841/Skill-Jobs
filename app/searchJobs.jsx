@@ -7,16 +7,51 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Octicons } from "@expo/vector-icons";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useJobStore } from "../store/jobStore";
 import JobsCount from "../components/JobsCount";
 import DetailJobCard from "../components/DetailJobCard";
-import { router } from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
 import DetailJobCardSkeleton from "../components/skeleton/DetailJobCardSkeleton";
-import CategoryJobs from "../components/CategoryJobs";
+
+const PopularSearch = ({ setInputText }) => {
+    const category = [
+        { id: 1, name: "Manufacturer" },
+        { id: 2, name: "Software Development" },
+        { id: 3, name: "Education, Tanning and Development" },
+        { id: 4, name: "IT Services and IT Consulting" },
+        { id: 5, name: "Creative" },
+        { id: 6, name: "React Developer" },
+        { id: 7, name: "Faculty Member" },
+    ];
+
+    return (
+        <View className="flex flex-col mb-6">
+            <View className="flex flex-row items-center pt-2 pb-3">
+                <Text className="text-black font-medium">Popular Searches</Text>
+            </View>
+            <View className="flex flex-row flex-wrap justify-center gap-2.5">
+                {category.map((item, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        className="bg-white px-4 py-2 rounded-md border border-slate-300"
+                        activeOpacity={0.5}
+                        onPress={() => setInputText(item.name)}
+                    >
+                        <Text className="text-gray-600 text-sm font-medium">
+                            {item.name}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
+    );
+};
 
 const searchJobs = () => {
-    const [inputText, setInputText] = useState("");
+    const { text } = useLocalSearchParams();
+
+    const [inputText, setInputText] = useState(text ?? "");
     const [searchLoading, setSearchLoading] = useState(false);
     const [filteredJobs, setFilteredJobs] = useState([]);
     const { totalJobs } = useJobStore();
@@ -101,7 +136,7 @@ const searchJobs = () => {
                             ))}
                     </View>
                 ) : filteredJobs.length === 0 && inputText.length === 0 ? (
-                    <CategoryJobs />
+                    <PopularSearch setInputText={setInputText} />
                 ) : filteredJobs.length === 0 ? (
                     <Text className="text-center text-lg font-semibold py-20">
                         No Jobs Found

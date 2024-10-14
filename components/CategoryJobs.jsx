@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { View, Text, TouchableOpacity } from "react-native";
 
 const CategoryJobs = () => {
@@ -24,6 +25,12 @@ const CategoryJobs = () => {
                         key={index}
                         className="bg-white px-4 py-2 rounded-md border border-slate-300"
                         activeOpacity={0.5}
+                        onPress={() => {
+                            router.push({
+                                pathname: "searchJobs",
+                                params: { text: item.name }, // Pass parameters here
+                            });
+                        }}
                     >
                         <Text className="text-gray-600 text-sm font-medium">
                             {item.name}
