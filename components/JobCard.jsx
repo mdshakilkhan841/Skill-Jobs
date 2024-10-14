@@ -84,12 +84,7 @@ const JobCard = ({ job }) => {
 };
 
 const JobList = () => {
-    const {
-        totalJobs,
-        isLoading,
-        error,
-        getNewJobs,
-    } = useJobStore();
+    const { totalJobs, isLoading, error, getNewJobs } = useJobStore();
 
     useEffect(() => {
         getNewJobs(); // Fetch the jobs on component mount
@@ -111,7 +106,7 @@ const JobList = () => {
 
             {/* Horizontal Job Card List using FlatList */}
             <FlatList
-                data={totalJobs}
+                data={totalJobs.slice(0, 5)}
                 keyExtractor={(item) => item.id + Math.random().toString()}
                 renderItem={({ item }) => <JobCard job={item} />} // Render each job card
                 horizontal={true}
