@@ -41,6 +41,9 @@ const browse = () => {
                         job.company
                             .toLowerCase()
                             .includes(inputText?.toLowerCase()) ||
+                        job.job_category
+                            .toLowerCase()
+                            .includes(inputText?.toLowerCase()) ||
                         qualificationsArray.some((q) =>
                             q.toLowerCase().includes(inputText?.toLowerCase())
                         )

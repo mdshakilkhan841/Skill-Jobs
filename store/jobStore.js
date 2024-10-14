@@ -3,6 +3,7 @@ import { create } from "zustand";
 
 export const useJobStore = create((set, get) => ({
     totalJobs: [],
+    jobCategory: [],
     next_cursor: null,
     isLoading: false,
     error: null,
@@ -10,9 +11,7 @@ export const useJobStore = create((set, get) => ({
     getNewJobs: async () => {
         set({ isLoading: true, error: null });
         try {
-            const nextCursor = get().next_cursor; // Get the current next_cursor from the state
-            // console.log("🚀 ~ getNewJobs: ~ nextCursor:", nextCursor)
-
+            const nextCursor = get().next_cursor;
             const response = await axios.get(
                 `https://jsonfakery.com/jobs/infinite-scroll`,
                 {
@@ -22,14 +21,23 @@ export const useJobStore = create((set, get) => ({
                 }
             );
             console.log(
-                "🚀 ~ getNewJobs: ~ response:",
+                "🚀 ~ getNewJobs: ~ response: next_cursor:",
                 response.data.next_cursor
             );
 
             const newJobs = response.data?.data || [];
 
+            const newJobCategories = newJobs.map((item) => item.job_category);
+
+            // Combine existing categories with new categories
+            const currentCategories = get().jobCategory;
+            const updatedCategories = [
+                ...new Set([...currentCategories, ...newJobCategories]),
+            ];
+
             set((state) => ({
                 totalJobs: [...state.totalJobs, ...newJobs],
+                jobCategory: updatedCategories,
                 next_cursor: response.data?.next_cursor,
                 isLoading: false,
             }));

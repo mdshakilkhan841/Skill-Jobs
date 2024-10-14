@@ -14,16 +14,18 @@ import DetailJobCard from "../components/DetailJobCard";
 import { useLocalSearchParams, router } from "expo-router";
 import DetailJobCardSkeleton from "../components/skeleton/DetailJobCardSkeleton";
 
-const PopularSearch = ({ setInputText }) => {
-    const category = [
-        { id: 1, name: "Manufacturer" },
-        { id: 2, name: "Software Development" },
-        { id: 3, name: "Education, Tanning and Development" },
-        { id: 4, name: "IT Services and IT Consulting" },
-        { id: 5, name: "Creative" },
-        { id: 6, name: "React Developer" },
-        { id: 7, name: "Faculty Member" },
+const PopularSearch = ({ jobCategory, setInputText }) => {
+    const defaultCategory = [
+        "Manufacturer",
+        "Software Development",
+        "Education, Tanning and Development",
+        "IT Services and IT Consulting",
+        "Creative",
+        "React Developer",
+        "Faculty Member",
     ];
+
+    const categories = jobCategory.length > 0 ? jobCategory : defaultCategory;
 
     return (
         <View className="flex flex-col mb-6">
@@ -31,15 +33,15 @@ const PopularSearch = ({ setInputText }) => {
                 <Text className="text-black font-medium">Popular Searches</Text>
             </View>
             <View className="flex flex-row flex-wrap justify-center gap-2.5">
-                {category.map((item, index) => (
+                {categories.map((item, index) => (
                     <TouchableOpacity
                         key={index}
                         className="bg-white px-4 py-2 rounded-md border border-slate-300"
                         activeOpacity={0.5}
-                        onPress={() => setInputText(item.name)}
+                        onPress={() => setInputText(item)}
                     >
                         <Text className="text-gray-600 text-sm font-medium">
-                            {item.name}
+                            {item}
                         </Text>
                     </TouchableOpacity>
                 ))}
@@ -54,7 +56,7 @@ const searchJobs = () => {
     const [inputText, setInputText] = useState(text ?? "");
     const [searchLoading, setSearchLoading] = useState(false);
     const [filteredJobs, setFilteredJobs] = useState([]);
-    const { totalJobs } = useJobStore();
+    const { totalJobs, jobCategory } = useJobStore();
 
     useEffect(() => {
         if (inputText.length > 0) {
@@ -69,6 +71,9 @@ const searchJobs = () => {
                             .toLowerCase()
                             .includes(inputText?.toLowerCase()) ||
                         job.company
+                            .toLowerCase()
+                            .includes(inputText?.toLowerCase()) ||
+                        job.job_category
                             .toLowerCase()
                             .includes(inputText?.toLowerCase()) ||
                         qualificationsArray.some((q) =>
@@ -136,7 +141,10 @@ const searchJobs = () => {
                             ))}
                     </View>
                 ) : filteredJobs.length === 0 && inputText.length === 0 ? (
-                    <PopularSearch setInputText={setInputText} />
+                    <PopularSearch
+                        jobCategory={jobCategory}
+                        setInputText={setInputText}
+                    />
                 ) : filteredJobs.length === 0 ? (
                     <Text className="text-center text-lg font-semibold py-20">
                         No Jobs Found
