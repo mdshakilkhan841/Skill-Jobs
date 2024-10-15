@@ -3,6 +3,7 @@ import Foundation from "@expo/vector-icons/Foundation";
 import Octicons from "@expo/vector-icons/Octicons";
 import { Tabs, useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 
 export default function TabLayout() {
     const router = useRouter();
@@ -89,9 +90,14 @@ export default function TabLayout() {
                                 elevation: 4,
                             }}
                         >
-                            <MaterialCommunityIcons
+                            {/* <MaterialCommunityIcons
                                 name="star-shooting-outline"
                                 size={30}
+                                color="white"
+                            /> */}
+                            <FontAwesome6
+                                name="wand-magic-sparkles"
+                                size={24}
                                 color="white"
                             />
                         </TouchableOpacity>
